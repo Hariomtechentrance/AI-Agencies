@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIAgency.in - AI Solutions & Services</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f5ff;
+            --neon-purple: #b537f2;
+            --neon-pink: #ff00ff;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        .nav a:hover {
+            color: var(--neon-blue);
+            background: rgba(0,245,255,0.1);
+            transform: translateY(-2px);
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav a:hover::after {
+            width: 100%;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1100;
+        }
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            border-radius: 2px;
+            display: block;
+        }
+        @media (max-width: 900px) {
+            .header { padding: 15px 20px; }
+            .nav { display: none; }
+            .nav.active {
+                display: flex !important;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background: rgba(10,10,10,0.97);
+                padding: 20px 30px;
+                border-radius: 15px;
+                gap: 20px;
+                z-index: 1050;
+            }
+            .hamburger { display: flex; }
+        }
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .three-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+        /* Animated typing effect */
+        #hero-title {
+            min-height: 4rem;
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg,#fff 0%,var(--neon-blue) 50%,var(--neon-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+            animation: textGlow 3s ease-in-out infinite alternate;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid var(--neon-blue);
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            #hero-title { font-size: 2.5rem; }
+        }
+        @keyframes textGlow {
+            from { filter: drop-shadow(0 0 20px rgba(0,245,255,0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(255,0,255,0.8)); }
+        }
+        /* Fade-in and float animation for subtitle and CTA */
+        .animated-fadein {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUpHero 1.2s cubic-bezier(.4,0,.2,1) forwards;
+        }
+        .hero-subtitle.animated-fadein { animation-delay: 1.2s; }
+        .hero-cta.animated-fadein { animation-delay: 1.5s; }
+        @keyframes fadeInUpHero {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--neon-blue);
+        }
+        .hero-badge::before { content:'✨'; animation:rotate 3s linear infinite; }
+        @keyframes rotate { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-cta { display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .btn-primary {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+            transition: left 0.6s;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,245,255,0.4);
+        }
+        .btn-secondary {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.18);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            backdrop-filter: blur(20px);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--neon-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0,245,255,0.2);
+        }
+        /* Stats */
+        .stats {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 60px;
+            z-index: 10;
+        }
+        .stat-item { text-align: center; opacity: 0; animation: fadeInUp 1s ease forwards; }
+        .stat-item:nth-child(2) { animation-delay: 0.2s; }
+        .stat-item:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+        .stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.7); font-weight: 500; }
+        /* Services Section */
+        .services {
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .service-card:hover::before {
+            left: 100%;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.3);
+        }
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--neon-blue);
+        }
+        .service-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        /* Portfolio Section */
+        .portfolio {
+            padding: 100px 50px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .portfolio-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 0, 255, 0.3);
+        }
+        .portfolio-item h4 {
+            color: var(--neon-pink);
+            margin-bottom: 10px;
+        }
+        .portfolio-item .industry {
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        /* Projects Section */
+        .projects-section {
+            padding: 100px 50px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            margin-bottom: 100px;
+        }
+        .projects-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .projects-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .projects-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .filter-btn.active {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            border-color: transparent;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .project-card:hover::before {
+            left: 100%;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 245, 255, 0.3);
+        }
+        .project-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+        }
+        .project-desc {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        .project-tags {
+            margin-bottom: 15px;
+        }
+        .project-tags span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+        .project-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 245, 255, 0.3);
+        }
+        /* Contact Section */
+        .contact {
+            padding: 100px 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--neon-blue);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px 0 0 0;
+            color: #fff;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 0 auto;
+            padding: 0 30px 30px 30px;
+            gap: 40px;
+        }
+        .footer-brand {
+            flex: 1 1 260px;
+            min-width: 220px;
+        }
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #00f5ff, #b537f2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .footer-desc {
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            color: #ccc;
+        }
+        .footer-social {
+            display: flex;
+            gap: 14px;
+            margin-top: 8px;
+        }
+        .footer-social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 50%;
+            font-size: 1.4rem;
+            color: #fff;
+            transition: background 0.2s, transform 0.2s;
+            text-decoration: none;
+        }
+        .footer-social-icon:hover {
+            background: linear-gradient(45deg, #00f5ff, #b537f2);
+            transform: scale(1.12);
+        }
+        .footer-contact, .footer-location {
+            flex: 1 1 220px;
+            min-width: 180px;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .footer-contact a { color: #fff; }
+        .footer-bottom {
+            text-align: center;
+            padding: 18px 0 10px 0;
+            color: #aaa;
+            font-size: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin-top: 10px;
+        }
+        @media (max-width: 900px) {
+            .footer-content { flex-direction: column; align-items: flex-start; gap: 24px; }
+            .footer-location iframe { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">AIAgency.in</div>
+        <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="hamburger" onclick="toggleNav()">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <canvas class="three-canvas" id="hero-canvas"></canvas>
+        <div class="floating-circles">
+            <div class="circle circle1"></div>
+            <div class="circle circle2"></div>
+            <div class="circle circle3"></div>
+            <div class="circle circle4"></div>
+            <div class="circle circle5"></div>
+            <div class="circle circle6"></div>
+            <div class="circle circle7"></div>
+            <div class="circle circle8"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">🤖 Premium AI Solutions 🚀</div>
+            <h1 id="hero-title"></h1>
+            <div class="hero-subtitle animated-fadein">
+                <span style="font-size:1.5em;vertical-align:middle;">💬</span>
+                Unlock automation, intelligence, and growth with next-gen <span style="color:#00f5ff;">AI</span> agents, <span style="font-size:1.2em;">🤖</span> chatbots, and custom models <span style="font-size:1.2em;">🧠</span>.
+            </div>
+            <div class="hero-cta animated-fadein">
+                <a href="#contact" class="btn-primary">Start Your AI Project</a>
+                <a href="#services" class="btn-secondary">Explore Services</a>
+            </div>
+        </div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">AI Projects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Industries Served</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2 class="section-title">Our AI Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>AI-Powered Chatbots <span style="font-size:1.2em;">💬</span></h3>
+                <p>Intelligent conversational agents that handle customer queries 24/7. Integrated with WhatsApp, Facebook Messenger, and websites with multilingual support.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>AI Agents for Automation <span style="font-size:1.2em;">🦾</span></h3>
+                <p>Smart automation tools for email responses, scheduling, CRM updates, and task management. Built with LangChain and GPT-4o technology.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🧠</div>
+                <h3>Machine Learning Models <span style="font-size:1.2em;">📊</span></h3>
+                <p>Custom ML solutions from data collection to deployment. Fraud detection, churn prediction, image classification, and predictive maintenance.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Generative AI Solutions <span style="font-size:1.2em;">🖼️</span></h3>
+                <p>Create content at scale with AI. Text generation, image creation, voice synthesis, and video production for marketing and content teams.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💡</div>
+                <h3>AI Consulting <span style="font-size:1.2em;">🧑‍💻</span></h3>
+                <p>Strategic AI implementation guidance. Readiness assessment, use-case identification, custom roadmaps, and training workshops for your team.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <h3>Custom AI Integrations <span style="font-size:1.2em;">🔗</span></h3>
+                <p>Seamlessly integrate AI into existing systems. OCR, computer vision, NLP, and recommendation engines for healthcare, retail, and education.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <h2 class="section-title">Case Studies</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <h4>GPT-Powered E-Commerce Chatbot <span style="font-size:1.2em;">🛒🤖</span></h4>
+                <div class="industry">Fashion E-Commerce</div>
+                <p><strong>Problem:</strong> 300+ daily customer queries overwhelming support team</p>
+                <p><strong>Solution:</strong> AI chatbot trained on product catalog and FAQs</p>
+                <p><strong>Result:</strong> 70% reduction in support tickets, 15% upsell increase</p>
+            </div>
+            <div class="portfolio-item">
+                <h4>Email AI Agent for Sales <span style="font-size:1.2em;">📧🤖</span></h4>
+                <div class="industry">SaaS Startup</div>
+                <p><strong>Problem:</strong> Missed follow-ups and manual email responses</p>
+                <p><strong>Solution:</strong> Automated email classification and response generation</p>
+                <p><strong>Result:</strong> 5x faster lead response, 20% conversion boost</p>
+            </div>
+            <div class="portfolio-item">
+                <h4>Predictive Analytics Dashboard <span style="font-size:1.2em;">📈🧠</span></h4>
+                <div class="industry">Manufacturing</div>
+                <p><strong>Problem:</strong> Unexpected equipment failures causing downtime</p>
+                <p><strong>Solution:</strong> ML model for predictive maintenance alerts</p>
+                <p><strong>Result:</strong> 40% reduction in unplanned downtime</p>
+            </div>
+            <div class="portfolio-item">
+                <h4>Content Generation Platform <span style="font-size:1.2em;">📝🎨</span></h4>
+                <div class="industry">Digital Marketing Agency</div>
+                <p><strong>Problem:</strong> Time-consuming content creation for multiple clients</p>
+                <p><strong>Solution:</strong> GenAI tool for blogs, captions, and social media</p>
+                <p><strong>Result:</strong> 60% faster content production, improved consistency</p>
+            </div>
+        </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="projects-header">
+            <h2>Our AI & Machine Learning Projects</h2>
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Healthcare">Healthcare</button>
+                <button class="filter-btn" data-filter="FinTech">FinTech</button>
+                <button class="filter-btn" data-filter="NLP">NLP</button>
+                <button class="filter-btn" data-filter="SmartHome">Smart Home</button>
+                <button class="filter-btn" data-filter="AgriTech">Agriculture</button>
+            </div>
+        </div>
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card" data-tags="Healthcare ML SVM">
+                <div class="project-icon">❤️‍🩹</div>
+                <div class="project-title">Heart Attack Risk Prediction</div>
+                <div class="project-desc">ML model using Poiseuille’s Law, SVM, Random Forest, and KNN. Predicts early signs of heart attacks using patient data.</div>
+                <div class="project-tags">
+                    <span>#Healthcare</span> <span>#ML</span> <span>#SVM</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 2 -->
+            <div class="project-card" data-tags="SmartHome IoT VoiceAI">
+                <div class="project-icon">🏠🤖</div>
+                <div class="project-title">Home Automation System</div>
+                <div class="project-desc">Voice-controlled smart home system using AI and IoT to manage lights, appliances, and routines.</div>
+                <div class="project-tags">
+                    <span>#SmartHome</span> <span>#IoT</span> <span>#VoiceAI</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 3 -->
+            <div class="project-card" data-tags="FinTech FraudDetection ML">
+                <div class="project-icon">💳🛡️</div>
+                <div class="project-title">Credit Card Fraud Detection</div>
+                <div class="project-desc">Trained on transaction data using Random Forest and Logistic Regression. Accurately flags fraud.</div>
+                <div class="project-tags">
+                    <span>#FinTech</span> <span>#FraudDetection</span> <span>#ML</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 4 -->
+            <div class="project-card" data-tags="AgriTech ComputerVision SmartFarming">
+                <div class="project-icon">🌱📷</div>
+                <div class="project-title">AI-Based Plant Growth Tracker</div>
+                <div class="project-desc">Uses image processing to classify crop stages. Helps farmers improve yield and crop health.</div>
+                <div class="project-tags">
+                    <span>#AgriTech</span> <span>#ComputerVision</span> <span>#SmartFarming</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 5 -->
+            <div class="project-card" data-tags="NLP Media FakeNews">
+                <div class="project-icon">📰🤔</div>
+                <div class="project-title">Fake News Analyzer</div>
+                <div class="project-desc">NLP-based fake news detection system using sentiment and credibility analysis.</div>
+                <div class="project-tags">
+                    <span>#NLP</span> <span>#Media</span> <span>#FakeNews</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 6 -->
+            <div class="project-card" data-tags="Healthcare OCR AI">
+                <div class="project-icon">📝👨‍⚕️</div>
+                <div class="project-title">Doctor Handwriting Recognition</div>
+                <div class="project-desc">AI system to digitize handwritten prescriptions using OCR and deep learning.</div>
+                <div class="project-tags">
+                    <span>#Healthcare</span> <span>#OCR</span> <span>#AI</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 7 -->
+            <div class="project-card" data-tags="NLP TextSummarization AI">
+                <div class="project-icon">📝🤖</div>
+                <div class="project-title">Text Summarization using NLP</div>
+                <div class="project-desc">Automatically condenses long content using transformers and NLP. Great for research and journalism.</div>
+                <div class="project-tags">
+                    <span>#NLP</span> <span>#TextSummarization</span> <span>#AI</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 8 -->
+            <div class="project-card" data-tags="Aerospace DQN AI">
+                <div class="project-icon">✈️🔍</div>
+                <div class="project-title">Aerospace Defect Classification</div>
+                <div class="project-desc">DQN and NLP-based model that classifies maintenance issues in aerospace systems.</div>
+                <div class="project-tags">
+                    <span>#Aerospace</span> <span>#DQN</span> <span>#AI</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 9 -->
+            <div class="project-card" data-tags="Chatbots CustomerSupport NLP">
+                <div class="project-icon">💬🤖</div>
+                <div class="project-title">AI Chatbot for Customer Support</div>
+                <div class="project-desc">NLP-powered chatbot with voice/text handling to automate real-time customer service.</div>
+                <div class="project-tags">
+                    <span>#Chatbots</span> <span>#CustomerSupport</span> <span>#NLP</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+            <!-- Project 10 -->
+            <div class="project-card" data-tags="NewsTech ContentAI NLP">
+                <div class="project-icon">📰📚</div>
+                <div class="project-title">News Article Categorization System</div>
+                <div class="project-desc">Classifies articles by topic using NLP and ML for better content management.</div>
+                <div class="project-tags">
+                    <span>#NewsTech</span> <span>#ContentAI</span> <span>#NLP</span>
+                </div>
+                <a href="#" class="project-link">View Case Study →</a>
+            </div>
+        </div>
+        <div class="projects-cta">
+            <span>Have a similar project in mind?</span>
+            <a href="#contact" class="btn-primary">Contact Us</a>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Start Your AI Project <span style="font-size:1.2em;">🤝🤖</span></h2>
+        <div class="contact-form">
+            <form>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="business">Business/Startup Name</label>
+                    <input type="text" id="business" name="business" placeholder="Your company name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Select a Service</label>
+                    <select id="service" name="service" required>
+                        <option value="">Choose a service...</option>
+                        <option value="chatbots">AI-Powered Chatbots</option>
+                        <option value="agents">AI Agents for Automation</option>
+                        <option value="ml">Machine Learning Models</option>
+                        <option value="genai">Generative AI Solutions</option>
+                        <option value="consulting">AI Consulting</option>
+                        <option value="integration">Custom AI Integrations</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budget">Budget Range (Optional)</label>
+                    <select id="budget" name="budget">
+                        <option value="">Select budget range...</option>
+                        <option value="5k-25k">₹5,000 - ₹25,000</option>
+                        <option value="25k-100k">₹25,000 - ₹1,00,000</option>
+                        <option value="100k-500k">₹1,00,000 - ₹5,00,000</option>
+                        <option value="500k+">₹5,00,000+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="requirements">Describe Your Requirements</label>
+                    <textarea id="requirements" name="requirements" rows="5" placeholder="Tell us about your project needs, timeline, and goals..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Submit Inquiry</button>
+            </form>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">AIAgency.in</div>
+                <div class="footer-desc">
+                    Transforming businesses with AI technology.<br>
+                    <span style="color:#00f5ff;">Premium AI Solutions for every industry.</span>
+                </div>
+                <div class="footer-social">
+                    <a href="https://twitter.com/" target="_blank" class="footer-social-icon" title="Twitter" aria-label="Twitter">
+                        <!-- Twitter SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M22.46 5.924c-.793.352-1.646.59-2.542.697a4.48 4.48 0 0 0 1.964-2.475 8.94 8.94 0 0 1-2.828 1.082A4.48 4.48 0 0 0 16.11 4c-2.48 0-4.49 2.017-4.49 4.5 0 .353.04.697.116 1.025C7.728 9.37 4.1 7.6 1.67 4.905a4.48 4.48 0 0 0-.61 2.264c0 1.563.796 2.944 2.008 3.755a4.47 4.47 0 0 1-2.034-.563v.057c0 2.183 1.553 4.004 3.617 4.42a4.51 4.51 0 0 1-2.027.077c.572 1.787 2.23 3.087 4.195 3.12A8.98 8.98 0 0 1 2 19.54a12.68 12.68 0 0 0 6.88 2.017c8.26 0 12.78-6.84 12.78-12.77 0-.195-.004-.39-.013-.583A9.18 9.18 0 0 0 24 4.59a8.98 8.98 0 0 1-2.54.697z" fill="#fff"/></svg>
+                    </a>
+                    <a href="https://linkedin.com/" target="_blank" class="footer-social-icon" title="LinkedIn" aria-label="LinkedIn">
+                        <!-- LinkedIn SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.36h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.59v5.61z" fill="#fff"/></svg>
+                    </a>
+                    <a href="https://github.com/" target="_blank" class="footer-social-icon" title="GitHub" aria-label="GitHub">
+                        <!-- GitHub SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.084-.729.084-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.52 11.52 0 0 1 3.003-.404c1.018.005 2.045.138 3.003.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.873.119 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.371.823 1.102.823 2.222v3.293c0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#fff"/></svg>
+                    </a>
+                    <a href="https://facebook.com/" target="_blank" class="footer-social-icon" title="Facebook" aria-label="Facebook">
+                        <!-- Facebook SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.326 24h11.495v-9.294H9.691v-3.622h3.13V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0" fill="#fff"/></svg>
+                    </a>
+                    <a href="https://instagram.com/" target="_blank" class="footer-social-icon" title="Instagram" aria-label="Instagram">
+                        <!-- Instagram SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><radialGradient id="ig" cx="50%" cy="50%" r="80%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#fff"/></radialGradient><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.242-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.093-1.247 3.374-1.306C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.396 3.678 1.378c-.981.981-1.247 2.093-1.306 3.374C2.013 5.668 2 6.077 2 9.333v5.334c0 3.256.013 3.665.072 4.946.059 1.281.325 2.393 1.306 3.374.981.981 2.093 1.247 3.374 1.306C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.325 3.374-1.306.981-.981 1.247-2.093 1.306-3.374.059-1.281.072-1.69.072-4.946V9.333c0-3.256-.013-3.665-.072-4.946-.059-1.281-.325-2.393-1.306-3.374-.981-.981-2.093-1.247-3.374-1.306C15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#fff"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <div><strong>Contact:</strong></div>
+                <div>📞 <a href="tel:9341344470" style="color:#fff;text-decoration:none;">9341344470</a></div>
+                <div>✉️ <a href="mailto:hariomvimal33333@gmail.com" style="color:#fff;text-decoration:none;">hariomvimal33333@gmail.com</a></div>
+            </div>
+            <div class="footer-location">
+                <div><strong>Location:</strong></div>
+                <div style="margin-top:8px;">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0199999999995!2d-122.4194154846816!3d37.77492977975933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ2JzMwLjAiTiAxMjLCsDI1JzA3LjkiVw!5e0!3m2!1sen!2sin!4v1610000000000!5m2!1sen!2sin"
+                        width="220" height="80" style="border:0;border-radius:10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div style="font-size:0.9em;color:#aaa;">(Google Map - location coming soon)</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 AIAgency.in &mdash; All rights reserved.
+        </div>
+    </footer>
+    <script>
+        // Hamburger menu
+        function toggleNav() {
+            document.querySelector('.nav').classList.toggle('active');
+        }
+        // Three.js Scene Setup (animated brain, particles, data nodes)
+        let scene, camera, renderer, particles, brain, dataNodes;
+        let mouseX = 0, mouseY = 0;
+        function initThreeJS() {
+            const canvas = document.getElementById('hero-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            // Create floating AI brain network
+            createAIBrain();
+            createFloatingParticles();
+            createDataNodes();
+            camera.position.z = 30;
+            document.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+        function createAIBrain() {
+            const brainGeometry = new THREE.SphereGeometry(8, 32, 32);
+            const brainMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00f5ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.6
+            });
+            brain = new THREE.Mesh(brainGeometry, brainMaterial);
+            brain.position.set(0, 0, 0);
+            scene.add(brain);
+            // Create neural connections
+            const connections = new THREE.Group();
+            for (let i = 0; i < 50; i++) {
+                const lineGeometry = new THREE.BufferGeometry();
+                const points = [];
+                const startX = (Math.random() - 0.5) * 20;
+                const startY = (Math.random() - 0.5) * 20;
+                const startZ = (Math.random() - 0.5) * 20;
+                const endX = (Math.random() - 0.5) * 20;
+                const endY = (Math.random() - 0.5) * 20;
+                const endZ = (Math.random() - 0.5) * 20;
+                points.push(new THREE.Vector3(startX, startY, startZ));
+                points.push(new THREE.Vector3(endX, endY, endZ));
+                lineGeometry.setFromPoints(points);
+                const lineMaterial = new THREE.LineBasicMaterial({
+                    color: 0xff00ff,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                const line = new THREE.Line(lineGeometry, lineMaterial);
+                connections.add(line);
+            }
+            scene.add(connections);
+        }
+        function createFloatingParticles() {
+            const particleGeometry = new THREE.BufferGeometry();
+            const particleCount = 200;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 100;
+                positions[i + 1] = (Math.random() - 0.5) * 100;
+                positions[i + 2] = (Math.random() - 0.5) * 100;
+                colors[i] = Math.random();
+                colors[i + 1] = Math.random();
+                colors[i + 2] = Math.random();
+            }
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.5,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+        }
+        function createDataNodes() {
+            dataNodes = new THREE.Group();
+            const nodeGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+            const nodeMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffff00,
+                transparent: true,
+                opacity: 0.8
+            });
+            for (let i = 0; i < 20; i++) {
+                const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+                node.position.set(
+                    (Math.random() - 0.5) * 40,
+                    (Math.random() - 0.5) * 40,
+                    (Math.random() - 0.5) * 40
+                );
+                dataNodes.add(node);
+            }
+            scene.add(dataNodes);
+        }
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = Date.now() * 0.001;
+            // Rotate brain
+            if (brain) {
+                brain.rotation.x = time * 0.3;
+                brain.rotation.y = time * 0.2;
+            }
+            // Animate particles
+            if (particles) {
+                particles.rotation.x = time * 0.1;
+                particles.rotation.y = time * 0.05;
+            }
+            // Animate data nodes
+            if (dataNodes) {
+                dataNodes.children.forEach((node, index) => {
+                    node.position.y += Math.sin(time + index) * 0.01;
+                    node.rotation.x = time + index;
+                });
+            }
+            // Mouse interaction
+            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
+        }
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Animate submit button
+            const button = this.querySelector('.btn-primary');
+            button.style.transform = 'scale(0.95)';
+            button.textContent = 'Sending...';
+            // Simulate form submission
+            setTimeout(() => {
+                button.textContent = 'Thank you! We\'ll be in touch soon.';
+                button.style.background = 'linear-gradient(45deg, #00ff00, #00aa00)';
+                setTimeout(() => {
+                    button.textContent = 'Submit Inquiry';
+                    button.style.background = 'linear-gradient(45deg, #00f5ff, #ff00ff)';
+                    button.style.transform = 'scale(1)';
+                    this.reset();
+                }, 3000);
+            }, 2000);
+        });
+        // Service card animations
+        const serviceCards = document.querySelectorAll('.service-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.opacity = '1';
+                    }, index * 200);
+                }
+            });
+        });
+        serviceCards.forEach(card => {
+            card.style.transform = 'translateY(50px)';
+            card.style.opacity = '0';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+        // Initialize Three.js when page loads
+        window.addEventListener('load', initThreeJS);
+        // Typing animation for hero title
+        document.addEventListener('DOMContentLoaded', function() {
+            const text = "Transform Your Business with AI";
+            const el = document.getElementById('hero-title');
+            let i = 0;
+            function type() {
+                if (i <= text.length) {
+                    el.textContent = text.substring(0, i);
+                    i++;
+                    setTimeout(type, 60);
+                } else {
+                    el.style.borderRight = "none";
+                }
+            }
+            type();
+        });
+        // --- Floating Circles Interactive Bounce Effect ---
+        document.querySelectorAll('.floating-circles .circle').forEach(circle => {
+            // Store original animation duration and direction
+            circle.dataset.origDuration = getComputedStyle(circle).animationDuration;
+            circle.dataset.origDirection = getComputedStyle(circle).animationDirection || 'normal';
+
+            circle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // Bounce effect: scale up and down quickly
+                circle.style.transition = 'transform 0.2s cubic-bezier(.68,-0.55,.27,1.55)';
+                circle.style.transform = 'scale(1.4)';
+                setTimeout(() => {
+                    circle.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        circle.style.transform = '';
+                        circle.style.transition = '';
+                    }, 150);
+                }, 150);
+
+                // Move fast in opposite direction by reversing animation and speeding up
+                circle.style.animationDirection = (circle.style.animationDirection === 'reverse' ? 'normal' : 'reverse');
+                circle.style.animationDuration = '2s';
+
+                // Restore after 1.5s
+                setTimeout(() => {
+                    circle.style.animationDuration = circle.dataset.origDuration;
+                    circle.style.animationDirection = circle.dataset.origDirection;
+                }, 1500);
+            });
+        });
+        // Project filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active from all, add to clicked
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.dataset.filter.toLowerCase();
+                document.querySelectorAll('.project-card').forEach(card => {
+                    if (
+                        filter === 'all' ||
+                        card.dataset.tags.toLowerCase().includes(filter) ||
+                        // For "Smart Home" and "Agriculture" buttons, match their tags
+                        (filter === 'smart home' && card.dataset.tags.toLowerCase().includes('smarthome')) ||
+                        (filter === 'agriculture' && card.dataset.tags.toLowerCase().includes('agritech'))
+                    ) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
