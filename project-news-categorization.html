@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Article Categorization System - Project Case Study</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f8f9fa; color: #222; }
+        .header { background: linear-gradient(90deg, #fc4a1a 0%, #f7b733 100%); color: #fff; padding: 40px 0 20px 0; text-align: center; }
+        .header h1 { margin: 0; font-size: 2.5em; letter-spacing: 1px; }
+        .header .subtitle { font-size: 1.2em; margin-top: 10px; opacity: 0.95; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border-radius: 12px; padding: 36px 28px; }
+        h2 { color: #fc4a1a; margin-top: 0; }
+        .section { margin-bottom: 32px; }
+        .tags { margin-bottom: 18px; }
+        .tag { display: inline-block; background: #f7b733; color: #fff; border-radius: 16px; padding: 4px 16px; font-size: 0.95em; margin-right: 8px; margin-bottom: 6px; }
+        .result { background: #fff6e3; color: #fc4a1a; padding: 12px 20px; border-radius: 8px; margin: 18px 0; font-weight: 500; }
+        .reference { font-size: 0.95em; color: #888; margin-top: 16px; }
+        .nav-link { display: inline-block; margin: 18px 0 0 0; color: #fc4a1a; text-decoration: none; font-weight: 500; border-bottom: 1px dashed #fc4a1a; transition: color 0.2s; }
+        .nav-link:hover { color: #f7b733; }
+        .back-btn { margin-top: 36px; display: inline-block; background: #f7b733; color: #fff; border: none; border-radius: 6px; padding: 10px 22px; font-size: 1em; text-decoration: none; transition: background 0.2s; }
+        .back-btn:hover { background: #fc4a1a; color: #fff; }
+        @media (max-width: 600px) {
+            .container { padding: 16px 6px; }
+            .header { padding: 24px 0 12px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>News Article Categorization System</h1>
+        <div class="subtitle">NLP & ML Project Case Study</div>
+    </div>
+    <div class="container">
+        <div class="tags">
+            <span class="tag">#NewsTech</span>
+            <span class="tag">#ContentAI</span>
+            <span class="tag">#NLP</span>
+        </div>
+        <div class="section">
+            <h2>Project Overview</h2>
+            <p>This project uses NLP and machine learning to automatically categorize news articles by topic, source, or sentiment. The system helps publishers and aggregators manage content, improve search, and deliver personalized recommendations to readers.</p>
+        </div>
+        <div class="section">
+            <h2>Problem</h2>
+            <p>With the massive volume of news published daily, manual categorization is inefficient and inconsistent. Publishers needed an automated, scalable solution to organize content and ensure accurate topic tagging for better user experience.</p>
+        </div>
+        <div class="section">
+            <h2>Solution</h2>
+            <p>The system leverages NLP models (BERT, LSTM) and supervised learning to classify articles into predefined categories. It supports multi-label classification, language detection, and can be integrated with content management systems for real-time operation.</p>
+        </div>
+        <div class="section">
+            <h2>Results</h2>
+            <div class="result">
+                <ul>
+                    <li><strong>Accuracy:</strong> Achieved 95%+ accuracy on benchmark datasets</li>
+                    <li><strong>Impact:</strong> Improved content discovery and reader engagement</li>
+                    <li><strong>Industry Use:</strong> Used by newsrooms and aggregators for automated curation</li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Technologies Used</h2>
+            <ul>
+                <li>Natural Language Processing (NLP)</li>
+                <li>Machine Learning (BERT, LSTM, SVM)</li>
+                <li>Python, Scikit-learn, TensorFlow</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>References</h2>
+            <div class="reference">
+                Guide: <a href="https://towardsdatascience.com/automated-news-categorization-using-machine-learning-and-nlp-6c7f4c6e2a5c" target="_blank">Automated News Categorization using ML & NLP (2023)</a>
+            </div>
+        </div>
+        <a href="index3.html#projects" class="back-btn">← Back to Projects</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Based Plant Growth Tracker - Project Case Study</title>
+    <style>:root {\n  --neon-blue: #00f5ff;\n  --neon-purple: #b537f2;\n  --neon-pink: #ff2fd6;\n  --bg-dark: #0b0c10;\n  --text-main: #e6e6e6;\n  --card-bg: rgba(255,255,255,0.05);\n  --card-border: rgba(255,255,255,0.12);\n  --tag-bg: rgba(0,245,255,0.12);\n  --tag-color: #00f5ff;\n  --section-radius: 22px;\n}\nbody {\n  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;\n  margin: 0;\n  background: var(--bg-dark);\n  color: var(--text-main);\n  min-height: 100vh;\n  overflow-x: hidden;\n}\n.header {\n  background: linear-gradient(90deg, var(--neon-blue) 0%, var(--neon-pink) 100%);\n  color: #fff;\n  padding: 38px 0 22px 0;\n  text-align: center;\n  border-bottom: 1.5px solid var(--neon-pink);\n  position: relative;\n  z-index: 2;\n}\n.header h1 {\n  margin: 0;\n  font-size: 2.8em;\n  letter-spacing: 1px;\n  background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  font-weight: 800;\n}\n.header .subtitle {\n  font-size: 1.25em;\n  margin-top: 12px;\n  opacity: 0.95;\n  color: var(--neon-blue);\n}\n.hero {\n  position: relative;\n  padding: 60px 0 36px 0;\n  text-align: center;\n  overflow: hidden;\n}\n.hero-icon {\n  font-size: 3.5em;\n  margin-bottom: 12px;\n  filter: drop-shadow(0 0 18px var(--neon-pink));\n}\n.hero-tags {\n  margin: 16px 0 0 0;\n}\n.hero-tag {\n  display: inline-block;\n  background: var(--tag-bg);\n  color: var(--tag-color);\n  border-radius: 14px;\n  padding: 5px 18px;\n  font-size: 1em;\n  margin: 0 7px 7px 0;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n}\n.floating-circles {\n  position: absolute;\n  top: 0; left: 0; width: 100%; height: 100%;\n  pointer-events: none;\n  z-index: 0;\n}\n.circle {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0.18;\n  animation: float 7s ease-in-out infinite;\n}\n.circle1 { width: 120px; height: 120px; background: var(--neon-blue); top: 14%; left: 7%; animation-delay: 0s; }\n.circle2 { width: 80px; height: 80px; background: var(--neon-pink); top: 60%; left: 80%; animation-delay: 2s; }\n.circle3 { width: 60px; height: 60px; background: var(--neon-purple); top: 75%; left: 12%; animation-delay: 1s; }\n.circle4 { width: 100px; height: 100px; background: var(--neon-blue); top: 40%; left: 70%; animation-delay: 3s; }\n.circle5 { width: 70px; height: 70px; background: var(--neon-pink); top: 20%; left: 60%; animation-delay: 4s; }\n@keyframes float {\n  0%,100% { transform: translateY(0) scale(1); }\n  50% { transform: translateY(-24px) scale(1.08); }\n}\n.container {\n  max-width: 900px;\n  margin: 0 auto;\n  background: var(--card-bg);\n  box-shadow: 0 4px 32px rgba(0,0,0,0.13);\n  border-radius: var(--section-radius);\n  padding: 38px 30px 28px 30px;\n  border: 1.5px solid var(--card-border);\n  margin-bottom: 48px;\n  position: relative;\n  z-index: 2;\n}\n.section {\n  margin-bottom: 38px;\n  background: rgba(0,0,0,0.13);\n  border-radius: 14px;\n  padding: 24px 22px 18px 22px;\n  border: 1px solid var(--card-border);\n  box-shadow: 0 2px 12px rgba(0,245,255,0.07);\n}\nh2 {\n  color: var(--neon-pink);\n  margin-top: 0;\n  font-size: 1.5em;\n}\n.result {\n  background: rgba(0,245,255,0.09);\n  color: var(--neon-blue);\n  padding: 14px 22px;\n  border-radius: 8px;\n  margin: 18px 0;\n  font-weight: 500;\n}\n.reference {\n  font-size: 0.98em;\n  color: #aaa;\n  margin-top: 18px;\n}\n.back-btn {\n  margin-top: 38px;\n  display: inline-block;\n  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));\n  color: #fff;\n  border: none;\n  border-radius: 9px;\n  padding: 12px 30px;\n  font-size: 1.07em;\n  text-decoration: none;\n  font-weight: 600;\n  letter-spacing: 0.02em;\n  transition: background 0.2s, transform 0.2s;\n  box-shadow: 0 4px 18px rgba(0,245,255,0.11);\n}\n.back-btn:hover {\n  background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));\n  transform: translateY(-2px) scale(1.03);\n}\n@media (max-width: 700px) {\n  .container { padding: 14px 2vw; }\n  .header { padding: 24px 0 12px 0; }\n  .hero { padding: 36px 0 18px 0; }\n}\n
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f8f9fa; color: #222; }
+        .header { background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%); color: #fff; padding: 40px 0 20px 0; text-align: center; }
+        .header h1 { margin: 0; font-size: 2.5em; letter-spacing: 1px; }
+        .header .subtitle { font-size: 1.2em; margin-top: 10px; opacity: 0.95; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border-radius: 12px; padding: 36px 28px; }
+        h2 { color: #185a9d; margin-top: 0; }
+        .section { margin-bottom: 32px; }
+        .tags { margin-bottom: 18px; }
+        .tag { display: inline-block; background: #43cea2; color: #fff; border-radius: 16px; padding: 4px 16px; font-size: 0.95em; margin-right: 8px; margin-bottom: 6px; }
+        .result { background: #e0f7fa; color: #185a9d; padding: 12px 20px; border-radius: 8px; margin: 18px 0; font-weight: 500; }
+        .reference { font-size: 0.95em; color: #888; margin-top: 16px; }
+        .nav-link { display: inline-block; margin: 18px 0 0 0; color: #185a9d; text-decoration: none; font-weight: 500; border-bottom: 1px dashed #185a9d; transition: color 0.2s; }
+        .nav-link:hover { color: #0d2c54; }
+        .back-btn { margin-top: 36px; display: inline-block; background: #185a9d; color: #fff; border: none; border-radius: 6px; padding: 10px 22px; font-size: 1em; text-decoration: none; transition: background 0.2s; }
+        .back-btn:hover { background: #43cea2; color: #185a9d; }
+        @media (max-width: 600px) {
+            .container { padding: 16px 6px; }
+            .header { padding: 24px 0 12px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI-Based Plant Growth Tracker</h1>
+        <div class="subtitle">Computer Vision & Agriculture Project Case Study</div>
+    </div>
+    <div class="container">
+        <div class="tags">
+            <span class="tag">#AgriTech</span>
+            <span class="tag">#ComputerVision</span>
+            <span class="tag">#SmartFarming</span>
+        </div>
+        <div class="section">
+            <h2>Project Overview</h2>
+            <p>This project demonstrates how artificial intelligence and computer vision are revolutionizing agriculture by enabling automated plant growth tracking, disease detection, and yield prediction. AI-driven systems help farmers optimize crop health and resource use for sustainable farming.</p>
+        </div>
+        <div class="section">
+            <h2>Problem</h2>
+            <p>Traditional crop monitoring relies on manual observation, which is time-consuming and prone to error. Farmers need accurate, real-time insights into soil, weather, and crop health to maximize yield and minimize loss from disease or pests.</p>
+        </div>
+        <div class="section">
+            <h2>Solution</h2>
+            <p>AI-powered systems integrate IoT sensors, drones, and computer vision models to monitor soil conditions, detect crop diseases, and track plant growth stages. Algorithms analyze images and sensor data to automatically adjust irrigation, nutrients, and pest management, ensuring optimal growth conditions.</p>
+        </div>
+        <div class="section">
+            <h2>Results</h2>
+            <div class="result">
+                <ul>
+                    <li><strong>Yield Increase:</strong> Up to 30% higher crop yields (University of California, Davis study)</li>
+                    <li><strong>Resource Efficiency:</strong> Significant reduction in water and fertilizer usage</li>
+                    <li><strong>Disease Detection:</strong> Over 90% accuracy in detecting crop diseases and pests</li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Technologies Used</h2>
+            <ul>
+                <li>IoT Sensors & Drones</li>
+                <li>Computer Vision & Deep Learning</li>
+                <li>Data Analytics & Predictive Modeling</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>References</h2>
+            <div class="reference">
+                Case Study: <a href="https://intellias.com/artificial-intelligence-in-agriculture/" target="_blank">AI in Agriculture and Farming: Revolutionizing Crop Growth (Intellias, 2025)</a>
+            </div>
+        </div>
+        <a href="index3.html#projects" class="back-btn">← Back to Projects</a>
+    </div>
+</body>
+</html>

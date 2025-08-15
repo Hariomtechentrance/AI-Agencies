@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Automation System - Project Case Study</title>
+    <style>:root {
+  --neon-blue: #00f5ff;
+  --neon-purple: #b537f2;
+  --neon-pink: #ff2fd6;
+  --bg-dark: #0b0c10;
+  --text-main: #e6e6e6;
+  --card-bg: rgba(255,255,255,0.05);
+  --card-border: rgba(255,255,255,0.12);
+  --tag-bg: rgba(0,245,255,0.12);
+  --tag-color: #00f5ff;
+  --section-radius: 22px;
+}
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.header {
+  background: linear-gradient(90deg, var(--neon-blue) 0%, var(--neon-pink) 100%);
+  color: #fff;
+  padding: 38px 0 22px 0;
+  text-align: center;
+  border-bottom: 1.5px solid var(--neon-pink);
+  position: relative;
+  z-index: 2;
+}
+.header h1 {
+  margin: 0;
+  font-size: 2.8em;
+  letter-spacing: 1px;
+  background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+.header .subtitle {
+  font-size: 1.25em;
+  margin-top: 12px;
+  opacity: 0.95;
+  color: var(--neon-blue);
+}
+.hero {
+  position: relative;
+  padding: 60px 0 36px 0;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-icon {
+  font-size: 3.5em;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 18px var(--neon-pink));
+}
+.hero-tags {
+  margin: 16px 0 0 0;
+}
+.hero-tag {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--tag-color);
+  border-radius: 14px;
+  padding: 5px 18px;
+  font-size: 1em;
+  margin: 0 7px 7px 0;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.floating-circles {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.18;
+  animation: float 7s ease-in-out infinite;
+}
+.circle1 { width: 120px; height: 120px; background: var(--neon-blue); top: 14%; left: 7%; animation-delay: 0s; }
+.circle2 { width: 80px; height: 80px; background: var(--neon-pink); top: 60%; left: 80%; animation-delay: 2s; }
+.circle3 { width: 60px; height: 60px; background: var(--neon-purple); top: 75%; left: 12%; animation-delay: 1s; }
+.circle4 { width: 100px; height: 100px; background: var(--neon-blue); top: 40%; left: 70%; animation-delay: 3s; }
+.circle5 { width: 70px; height: 70px; background: var(--neon-pink); top: 20%; left: 60%; animation-delay: 4s; }
+@keyframes float {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-24px) scale(1.08); }
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.13);
+  border-radius: var(--section-radius);
+  padding: 38px 30px 28px 30px;
+  border: 1.5px solid var(--card-border);
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 2;
+}
+.section {
+  margin-bottom: 38px;
+  background: rgba(0,0,0,0.13);
+  border-radius: 14px;
+  padding: 24px 22px 18px 22px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2px 12px rgba(0,245,255,0.07);
+}
+h2 {
+  color: var(--neon-pink);
+  margin-top: 0;
+  font-size: 1.5em;
+}
+.result {
+  background: rgba(0,245,255,0.09);
+  color: var(--neon-blue);
+  padding: 14px 22px;
+  border-radius: 8px;
+  margin: 18px 0;
+  font-weight: 500;
+}
+.reference {
+  font-size: 0.98em;
+  color: #aaa;
+  margin-top: 18px;
+}
+.back-btn {
+  margin-top: 38px;
+  display: inline-block;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 30px;
+  font-size: 1.07em;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 18px rgba(0,245,255,0.11);
+}
+.back-btn:hover {
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+  transform: translateY(-2px) scale(1.03);
+}
+@media (max-width: 700px) {
+  .container { padding: 14px 2vw; }
+  .header { padding: 24px 0 12px 0; }
+  .hero { padding: 36px 0 18px 0; }
+}
+
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f8f9fa; color: #222; }
+        .header { background: linear-gradient(90deg, #1976d2 0%, #64b5f6 100%); color: #fff; padding: 40px 0 20px 0; text-align: center; }
+        .header h1 { margin: 0; font-size: 2.5em; letter-spacing: 1px; }
+        .header .subtitle { font-size: 1.2em; margin-top: 10px; opacity: 0.95; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border-radius: 12px; padding: 36px 28px; }
+        h2 { color: #1976d2; margin-top: 0; }
+        .section { margin-bottom: 32px; }
+        .tags { margin-bottom: 18px; }
+        .tag { display: inline-block; background: #64b5f6; color: #fff; border-radius: 16px; padding: 4px 16px; font-size: 0.95em; margin-right: 8px; margin-bottom: 6px; }
+        .result { background: #e3f2fd; color: #1976d2; padding: 12px 20px; border-radius: 8px; margin: 18px 0; font-weight: 500; }
+        .reference { font-size: 0.95em; color: #888; margin-top: 16px; }
+        .nav-link { display: inline-block; margin: 18px 0 0 0; color: #1976d2; text-decoration: none; font-weight: 500; border-bottom: 1px dashed #1976d2; transition: color 0.2s; }
+        .nav-link:hover { color: #0d47a1; }
+        .back-btn { margin-top: 36px; display: inline-block; background: #1976d2; color: #fff; border: none; border-radius: 6px; padding: 10px 22px; font-size: 1em; text-decoration: none; transition: background 0.2s; }
+        .back-btn:hover { background: #0d47a1; }
+        @media (max-width: 600px) {
+            .container { padding: 16px 6px; }
+            .header { padding: 24px 0 12px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Home Automation System</h1>
+        <div class="subtitle">AI & IoT Project Case Study</div>
+    </div>
+    <div class="container">
+        <div class="tags">
+            <span class="tag">#SmartHome</span>
+            <span class="tag">#IoT</span>
+            <span class="tag">#AI</span>
+        </div>
+        <div class="section">
+            <h2>Project Overview</h2>
+            <p>This project highlights how AI and IoT technologies are transforming modern home living. By integrating intelligent systems, homeowners can enjoy personalized comfort, improved security, and energy efficiency—all managed seamlessly by smart algorithms.</p>
+        </div>
+        <div class="section">
+            <h2>Problem</h2>
+            <p>Traditional home automation systems often require manual configuration and lack the ability to adapt to changing user needs or schedules. There was a demand for a smarter, more intuitive system that could anticipate and respond to the unique preferences and routines of each household.</p>
+        </div>
+        <div class="section">
+            <h2>Solution</h2>
+            <p>An AI-driven home management system was developed, leveraging IoT sensors and machine learning algorithms. The system analyzes user behavior and environmental data to automate heating, lighting, security, and entertainment. Features include predictive climate control, adaptive security, and personalized settings—all self-learning and privacy-focused.</p>
+        </div>
+        <div class="section">
+            <h2>Results</h2>
+            <div class="result">
+                <ul>
+                    <li><strong>Energy Savings:</strong> 40% reduction in energy usage for lighting and heating</li>
+                    <li><strong>User Satisfaction:</strong> Significant improvement in comfort, security, and personalization</li>
+                    <li><strong>Industry Impact:</strong> Set new standards for adaptive, privacy-conscious smart homes</li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Technologies Used</h2>
+            <ul>
+                <li>IoT Sensors & Devices</li>
+                <li>Machine Learning Algorithms</li>
+                <li>Cloud Integration & Data Security</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>References</h2>
+            <div class="reference">
+                Case Study: <a href="https://digitaldefynd.com/IQ/ai-in-home-automation/" target="_blank">AI in Home Automation: 5 Case Studies (DigitalDefynd, 2025)</a>
+            </div>
+        </div>
+        <a href="index3.html#projects" class="back-btn">← Back to Projects</a>
+    </div>
+</body>
+</html>
